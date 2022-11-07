@@ -16,3 +16,8 @@
 hello <- function() {
   print("Hello, world!")
 }
+
+library(rworldmap)
+library(magrittr)
+worldMap<-getMap()
+continents<-mapCountryData(worldMap, nameColumnToPlot="continent")
