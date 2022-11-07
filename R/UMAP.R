@@ -13,12 +13,11 @@
 #   Check Package:             'Ctrl + Shift + E'
 #   Test Package:              'Ctrl + Shift + T'
 
-hello <- function() {
-  print("Hello, world!")
-}
+
 # Importing dataset
 library(rworldmap)
 worldMap<-getMap()
 continents<-mapCountryData(worldMap, nameColumnToPlot="continent")
 
 # Performing UMAP
+
