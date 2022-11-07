@@ -16,8 +16,9 @@
 hello <- function() {
   print("Hello, world!")
 }
-
+# Importing dataset
 library(rworldmap)
-library(magrittr)
 worldMap<-getMap()
 continents<-mapCountryData(worldMap, nameColumnToPlot="continent")
+
+# Performing UMAP
