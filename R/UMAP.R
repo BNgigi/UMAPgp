@@ -1,6 +1,6 @@
 # Hello, world!
 #
-# This is an example function named 'hello' 
+# This is an example function named 'hello'
 # which prints 'Hello, world!'.
 #
 # You can learn more about package authoring with RStudio at:
@@ -43,7 +43,7 @@ ggplot(data = iris, aes(x = Petal.Length, y = Petal.Width))+
 # Perprocessing the data for umap
 ```{r}
 # Adding a unique row ID
-iris <- iris %>% 
+iris <- iris %>%
   mutate(ID=row_number())
 
 # Creating a dataframe with all categorical variables with the unique row ID
@@ -59,7 +59,7 @@ set.seed(142)
 umap_fit <- iris %>%
   select(where(is.numeric)) %>%
   column_to_rownames("ID") %>%
-  scale() %>% 
+  scale() %>%
   umap()
 umap_df <- umap_fit$layout %>%
   as.data.frame()%>%
@@ -72,12 +72,14 @@ umap_df <- umap_fit$layout %>%
 # UMAP Plot
 ```{r}
 umap_df %>%
-  ggplot(aes(x = UMAP1, 
-             y = UMAP2, 
+  ggplot(aes(x = UMAP1,
+             y = UMAP2,
              color = Species))+
   geom_point()+
   labs(x = "UMAP1",
        y = "UMAP2",
       subtitle = "UMAP plot")
 ```
+
+
 
