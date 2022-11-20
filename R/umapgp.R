@@ -1,6 +1,6 @@
 #' @title package
 #' @description Computes a manifold approximation and projection
-#' @param dataframe
+#' @param data dataframe
 #' @return object of class umap, containing atleast a component with an embedding and a component with configuration settings
 #' @examples
 #' package::UMAPgp()
