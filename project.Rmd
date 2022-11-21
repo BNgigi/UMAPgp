@@ -15,4 +15,13 @@ library(devtools)
 ```{r}
 use_r("umapgp")
 ```
+```{r}
+use_package("datasets")
+```
+```{r}
+use_package("ggplot2")
+```
+```{r}
+use_testthat()
+```
 
