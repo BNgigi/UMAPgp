@@ -1,0 +1,27 @@
+---
+title: "project"
+output: html_document
+date: "2022-11-17"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(devtools)
+```
+
+```{r}
+use_r("umapgp")
+```
+```{r}
+use_package("datasets")
+```
+```{r}
+use_package("ggplot2")
+```
+```{r}
+use_testthat()
+```
+
