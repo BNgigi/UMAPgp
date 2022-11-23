@@ -18,8 +18,9 @@ library(datasets)
 ```
 
 ```{r}
-use_r("umapgp")
+use_r("globals")
 ```
+
 ```{r}
 use_package("datasets")
 ```
@@ -140,6 +141,19 @@ use_test("UMAP")
 
 
 
+```{r}
+install.packages("roxygen2")
+```
 
+```{r}
+library(roxygen2)
+```
 
+```{r}
+devtools::document()
+```
+
+```{r}
+use_r("dataset")
+```
 
