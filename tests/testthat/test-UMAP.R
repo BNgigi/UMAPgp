@@ -20,8 +20,9 @@ test_that("select", {
     Math = c(75, 58, 93, 66),
     Eng= c(44, 89, 89, NA))
   df1<-data.frame(
-    Math = c(75, 58, 93, 66)
+    Math = c(75, 58, 93, 66),
+    Eng= c(44,89,89,NA)
     )
-  expect_equal(select(df,Math),df1)
+  expect_equal(select(df,Math,Eng),df1)
 
 })
