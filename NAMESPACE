@@ -1,6 +1,6 @@
 exportPattern("^[[:alpha:]]+")
-import(dplyr)
 import(ggplot2)
+import(dplyr)
+import(umap)
 import(datasets)
 import(devtools)
-import(umap)

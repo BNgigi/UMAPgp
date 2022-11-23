@@ -1,23 +1,25 @@
 
 
 
-#' @title package
+#' @title UMAPgp package
 #' @description Computes a manifold approximation and projection
 #' @param data The dataset to be used for analysis, it should be a dataframe.
-#' @param col A variable of interest from the dataframe.
+#' @param var A variable of interest from the dataframe.
 #' @import ggplot2
 #' @import dplyr
 #' @import umap
-#' @returns  object of class umap, containing atleast a component with an embedding and a component with configuration settings
-#' @examples umapgp(col=Species,data=iris)
+#' @import datasets
+#' @import devtools
+#' @return  object of class umap, containing atleast a component with an embedding and a component with configuration settings
+#' @examples umapgp(var=Species,data=iris)
 #' @export
-utils::globalVariables(c("ID","UMAP1","UMAP2","column_to_rownames","ggplot2","where"))
 
-umapgp<-function(col,data){
+
+umapgp<-function(var,data){
   data <- data %>%
     mutate(ID=row_number())
   data_meta <- data %>%
-    select(ID, col)
+    select(ID, var)
   set.seed(142)
   umap_fit <- data %>%
     select(where(is.numeric)) %>%
@@ -34,7 +36,7 @@ umapgp<-function(col,data){
   umapplot<-umap_df %>%
     ggplot2(aes(x = UMAP1,
                 y = UMAP2,
-                color = col))+
+                color = var()))+
     geom_point()+
     labs(x = "UMAP1",
          y = "UMAP2",
