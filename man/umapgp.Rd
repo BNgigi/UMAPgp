@@ -7,7 +7,7 @@
 umapgp(var, data)
 }
 \arguments{
-\item{var}{A variable of interest from the dataframe.}
+\item{var}{A variable of interest from the dataframe, it should be categorical.}
 
 \item{data}{The dataset to be used for analysis, it should be a dataframe.}
 }
@@ -15,8 +15,8 @@ umapgp(var, data)
 object of class umap, containing atleast a component with an embedding and a component with configuration settings
 }
 \description{
-Computes a manifold approximation and projection
+Computes a manifold approximation and projection.
 }
 \examples{
-umapgp(var=Species,data=iris)
+umapgp(var="Species",data=iris)
 }
