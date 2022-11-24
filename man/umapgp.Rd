@@ -2,24 +2,21 @@
 % Please edit documentation in R/UMAP.R
 \name{umapgp}
 \alias{umapgp}
-\title{package}
+\title{UMAPgp package}
 \usage{
-umapgp(x, col, data)
+umapgp(var, data)
 }
 \arguments{
-\item{x}{variable}
+\item{var}{A variable of interest from the dataframe, it should be categorical.}
 
-\item{col}{variable}
-
-\item{data}{dataframe}
+\item{data}{The dataset to be used for analysis, it should be a dataframe.}
 }
 \value{
 object of class umap, containing atleast a component with an embedding and a component with configuration settings
 }
 \description{
-Computes a manifold approximation and projection
+Computes a manifold approximation and projection.
 }
 \examples{
-umapgp(ID,species,data=datasets::iris)
-
+umapgp(var="Species",data=iris)
 }
