@@ -1,11 +1,10 @@
 Package: UMAPgp
 Type: Package
-Title: What the Package Does (Title Case)
+Title: Preservation of Global Structure in Uniform Manifold Approximation and Projection (UMAP)
 Version: 0.2.0
 Author: Beatrice, Catherine and Pujan
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
+Maintainer: <nderituc@mail.gvsu.edu>
+Description: It computes a manifold approximation and projection
 License: MIT + file LICENCE
 Encoding: UTF-8
 LazyData: true
