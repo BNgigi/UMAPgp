@@ -1,4 +1,5 @@
 
+#test for mutate
 test_that("mutate", {
   df <- data.frame(
     studentname = c("Student1", "Student2", "Student3", "Student4"),
@@ -14,6 +15,7 @@ test_that("mutate", {
   expect_equal(mutate(df, totalMarks = Math + Eng),df1)
 })
 
+#test for select
 test_that("select", {
   df <- data.frame(
     studentname = c("Student1", "Student2", "Student3", "Student4"),
@@ -27,6 +29,7 @@ test_that("select", {
 
 })
 
+#test for columns to rownames
 test_that("column_to_rownames",{
   data <- data.frame(x1 = LETTERS[1:5],
                      x2 = 5:9)
@@ -34,6 +37,7 @@ test_that("column_to_rownames",{
   expect_equal(column_to_rownames(data,"x1"),data1)
 
 })
+#test for innerjoin
 test_that("inner_join",{
   df1 = data.frame(team=c("A", "B", "C", "D", "E", "F", "G", "H"),
                    points=c(18, 22, 19, 14, 14, 11, 20, 28))
@@ -47,6 +51,7 @@ test_that("inner_join",{
 
 })
 
+#test for rename
 test_that("rename",{
   df <- data.frame(col1 = 1:3, col2 = 4:6, col3 = 7:9)
   df1<-data.frame(c1=1:3, col2=4:6, col3=7:9)
@@ -54,6 +59,7 @@ test_that("rename",{
 
 })
 
+# test for scale
 test_that("scale",{
   mat <- matrix(1:9, ncol = 3)
   mat1<-scale(mat)
@@ -61,6 +67,7 @@ test_that("scale",{
   expect_equal(scale(mat),mat1)
 })
 
+#test for umap
 test_that("umap",{
   df1<-force(iris)
   df2<-df1%>%select(where(is.numeric))
@@ -70,6 +77,7 @@ test_that("umap",{
 
 })
 
+#test for ggplot
 test_that("ggplot",{
   df<-force(iris)
   df1<-ggplot(df, aes(x = Petal.Length, y = Petal.Width))+
