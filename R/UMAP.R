@@ -3,7 +3,7 @@
 
 #' @title UMAPgp package
 #' @description Computes a manifold approximation and projection.
-#' @param data The dataset to be used for analysis, it should be a dataframe.
+#' @param data The dataset to be used for analysis, it should be a dataframe with no rownames.
 #' @param var A variable of interest from the dataframe, it should be categorical.
 #' @import ggplot2 dplyr umap datasets  devtools  tibble
 #' @return  object of class umap, containing atleast a component with an embedding and a component with configuration settings
@@ -36,6 +36,7 @@ umapgp<-function(var,data){
            UMAP2="V2") %>%
     mutate(ID=row_number())%>%
     inner_join(data_meta, by="ID")
+  umap_df$var<- data[, var]
 
 # UMAP Plot
   umapplot<-umap_df %>%
@@ -48,3 +49,4 @@ umapgp<-function(var,data){
          subtitle = "UMAP plot")
   return(umapplot)
 }
+

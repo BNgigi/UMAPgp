@@ -4,7 +4,7 @@ Title: Preservation of Global Structure in Uniform Manifold Approximation and Pr
 Version: 0.2.0
 Author: Beatrice, Catherine and Pujan
 Maintainer: <nderituc@mail.gvsu.edu>
-Description: It computes a manifold approximation and projection
+Description: It computes a manifold approximation and projection.
 License: MIT + file LICENCE
 Encoding: UTF-8
 LazyData: true
