@@ -154,3 +154,11 @@ umapgp<-function(var,data){
 ## Package vignette: Quality real-time examples
 
 We shall now use a different dataset 'chickwts' and apply our newly developed package to the dataset to demonstrate the functionality of umapgp in the cluster/species orientation.
+
+```{r}
+# Loading the dataset and performing umapgp
+data("chickwts")
+chickwts
+
+umapgp(var="feed", data=chickwts)
+```
