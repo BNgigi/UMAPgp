@@ -27,3 +27,13 @@ Preservation of global structure in manifold learning algorithms will ensure tha
 
 In this section, we shall load the required packages and import the dataset 'Iris' which shall be used for the purpose of this project. We will work towards visualizing the dataset alongwith preprocessing it to perform UMAP. Additionally, we shall create the UMAP plot and check if the distances between the clusters/species have been preserved. It shall address our Aim 1 and Aim 2. 
 
+```{r}
+# Loading the packages
+library(umap)
+library(tidyverse)
+library(magrittr)
+
+# Importing the dataset
+data("iris")
+iris
+
