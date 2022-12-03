@@ -19,3 +19,6 @@ library(UMAPgp)
 ```
 ## Package Vignette: Rationale
 UMAP preserves local structure by grouping neighboring data points together which provides an informative visualization of heterogeneity in a dataset. However, if one wants to understand the relationship between clusters of data points, this can be troublesome since UMAP does not warrant that inter-cluster distances are preserved correctly. To address the shortcomings, we have created a function, UMAPgp, and developed its equivalent package which when applied preserves the global structure of manifold learning algorithms for small datasets. It also preservs the global structure of manifold learning algorithms without losing the finer details.
+
+## Package Vignette: Significance/ Innovation
+Preservation of global structure in manifold learning algorithms will ensure that UMAP represents the big-picture while not losing the fine details hence, better visualization. Based on the project results, we will modify the cost function shown below and create an R package of a final embedding with an optimal cost function.
