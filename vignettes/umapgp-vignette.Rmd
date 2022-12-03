@@ -150,3 +150,7 @@ umapgp<-function(var,data){
   return(umapplot)
 }
 ```
+
+## Package vignette: Quality real-time examples
+
+We shall now use a different dataset 'chickwts' and apply our newly developed package to the dataset to demonstrate the functionality of umapgp in the cluster/species orientation.
