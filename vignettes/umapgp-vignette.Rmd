@@ -37,3 +37,44 @@ library(magrittr)
 data("iris")
 iris
 
+# Visualizing the dataset
+ggplot(data = iris, aes(x = Petal.Length, y = Petal.Width))+
+  xlab("Petal Length")+
+  ylab("Petal Width") +
+  geom_point(aes(color = Species,shape=Species))+
+  geom_smooth(method='lm')+
+  ggtitle("Iris Petal Length vs Width")
+
+# Pre-processing the data for umap by adding a unique row ID and creating a dataframe with all categorical variables with the unique row ID
+
+iris <- iris %>% 
+  mutate(ID=row_number())
+
+iris_meta <- iris %>%
+  select(ID, Species)
+
+# Performing UMAP
+set.seed(142)
+umap_fit <- iris %>%
+  select(where(is.numeric)) %>%
+  column_to_rownames("ID") %>%
+  scale() %>% 
+  umap()
+umap_df <- umap_fit$layout %>%
+  as.data.frame()%>%
+  rename(UMAP1="V1",
+         UMAP2="V2") %>%
+  mutate(ID=row_number())%>%
+  inner_join(iris_meta, by="ID")
+umap_df
+
+# UMAP Plot
+umap_df %>%
+  ggplot(aes(x = UMAP1, 
+             y = UMAP2, 
+             color = Species))+
+  geom_point()+
+  labs(x = "UMAP1",
+       y = "UMAP2",
+      subtitle = "UMAP plot")
+
