@@ -108,3 +108,8 @@ D.sq(g1,g2)
 ## Demonstration of how to use the function 'umapgp'
 
 This section shall involve defining the function and the parameters to be passed. We shall preprocessing the dataset for UMAP and create a dataframe with all the categorical variables with the unique row ID. We shall then perform UMAP and create the UMAP plot to demonstrate the practical usage of the function **umapgp**.
+
+```{r}
+# Defining the function and the parameters to be passed
+
+umapgp<-function(var,data){
