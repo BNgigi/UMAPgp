@@ -1,0 +1,125 @@
+---
+title: "Preservation of UMAP in global structure manifold"
+author: "Beatrice, Catherine and Pujan"
+date: "2022-11-11"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message=FALSE)
+```
+
+# Introduction
+Uniform Manifold Approximation and Projection (UMAP) is an algorithm for dimensional reduction.The package that will be developed is suited to process small data with approximately 5,000 data points.
+
+# Loading packages
+```{r}
+library(umap)
+library(tidyverse)
+library(magrittr)
+```
+
+# Importing the dataset
+```{r}
+data("iris")
+iris
+```
+
+# Visualizing the dataset
+```{r}
+ggplot(data = iris, aes(x = Petal.Length, y = Petal.Width))+
+  xlab("Petal Length")+
+  ylab("Petal Width") +
+  geom_point(aes(color = Species,shape=Species))+
+  geom_smooth(method='lm')+
+  ggtitle("Iris Petal Length vs Width")
+```
+
+# Preprocessing the data for umap
+```{r}
+# Adding a unique row ID
+iris <- iris %>% 
+  mutate(ID=row_number())
+
+# Creating a dataframe with all categorical variables with the unique row ID
+
+iris_meta <- iris %>%
+  select(ID, Species)
+
+```
+
+# Performing UMAP
+```{r}
+set.seed(142)
+umap_fit <- iris %>%
+  select(where(is.numeric)) %>%
+  column_to_rownames("ID") %>%
+  scale() %>% 
+  umap()
+umap_df <- umap_fit$layout %>%
+  as.data.frame()%>%
+  rename(UMAP1="V1",
+         UMAP2="V2") %>%
+  mutate(ID=row_number())%>%
+  inner_join(iris, by="ID")
+umap_df
+```
+
+# UMAP Plot
+```{r}
+original_umap_plot <- umap_df %>%
+  ggplot(aes(x = UMAP1, 
+             y = UMAP2, 
+             color = Species))+
+  geom_point()+
+  labs(x = "UMAP1",
+       y = "UMAP2",
+      subtitle = "UMAP Plot")
+original_umap_plot
+```
+
+# Checking Aim 1
+
+To quantify the global structure by establishing preservation of distances between clusters.
+
+## Correlation of original with reconstructed distances between data points
+
+Null hypothesis:- There is no correlation between original and reconstructed distances between data points.
+
+Alternative hypothesis:- There is correlation between original and reconstructed distances between data points.
+
+```{r}
+# Pearson is most appropriate for measurements taken from an interval scale, while the Spearman is more appropriate for measurements taken from ordinal scales.
+cor.test(iris$Petal.Length, umap_df$UMAP1, method = 'pearson')
+cor.test(iris$Petal.Width, umap_df$UMAP2, method = 'pearson')
+
+```
+
+The result shows the p-value of less than 0.05 hence we reject the null hypothesis and conclude that there is a correlation between original and reconstructed distances between data points.
+
+## Preservation of pairwise Mahalanobis distances between clusters
+```{r}
+g1 <- iris[3:4]
+g2 <- umap_df[1:2]
+D.sq <- function (g1, g2) {
+    dbar <- as.vector(colMeans(g1) - colMeans(g2))
+    S1 <- cov(g1)
+    S2 <- cov(g2)
+    n1 <- nrow(g1)
+    n2 <- nrow(g2)
+    V <- as.matrix((1/(n1 + n2 - 2)) * (((n1 - 1) * S1) + ((n2 - 1) * S2)))
+    D.sq <- t(dbar) %*% solve(V) %*% dbar
+    res <- list()
+    res$D.sq <- D.sq
+    res$V <- V
+    res
+}
+
+D.sq(g1,g2)
+```
+
+The mahalanobis distance between clusters is 3.7158. We will therefore aim to achieve mahalanobis Distance of 1 or lower so that the data point are right among the benchmark points.
+
+
+
+
