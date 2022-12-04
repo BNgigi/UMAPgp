@@ -49,4 +49,3 @@ umapgp<-function(var,data){
          subtitle = "UMAP plot")
   return(umapplot)
 }
-

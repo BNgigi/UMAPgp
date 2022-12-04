@@ -18,4 +18,147 @@ knitr::opts_chunk$set(
 library(UMAPgp)
 ```
 ## Package Vignette: Rationale
-UMAP preserves local structure by grouping neighboring data points together which provides an informative visualization of heterogeneity in a dataset. However, if one wants to understand the relationship between clusters of data points, this can be troublesome since UMAP does not warrant that inter-cluster distances are preserved correctly. To address the shortcomings, we have created a function, UMAPgp, and developed its equivalent package which when applied preserves the global structure of manifold learning algorithms for small datasets. It also preservs the global structure of manifold learning algorithms without losing the finer details.
+UMAP preserves local structure by grouping neighboring data points together which provides an informative visualization of heterogeneity in a dataset. However, if one wants to understand the relationship between clusters of data points, this can be troublesome since UMAP does not warrant that inter-cluster distances are preserved correctly. To address the shortcomings, we have created a function, UMAPgp, and developed its equivalent package which when applied preserves the global structure of manifold learning algorithms for small datasets. It also preservs the global structure of manifold learning algorithms without losing the finer details.The package that will be developed is suited to process small data with approximately 1,000 data points.
+
+## Package Vignette: Significance/ Innovation
+Preservation of global structure in manifold learning algorithms will ensure that UMAP represents the big-picture while not losing the fine details hence, better visualization. Based on the project results, we will modify the cost function shown below and create an R package of a final embedding with an optimal cost function.
+
+## Addressing Aim 1 and Aim 2: Preservation of Distances between the Clusters/Species
+
+In this section, we shall load the required packages and import the dataset 'Iris' which shall be used for the purpose of this project. We will work towards visualizing the dataset alongwith preprocessing it to perform UMAP. Additionally, we shall create the UMAP plot and check if the distances between the clusters/species have been preserved. It shall address our Aim 1 and Aim 2. 
+
+```{r}
+# Loading the packages
+library(umap)
+library(tidyverse)
+library(magrittr)
+
+# Importing the dataset
+data("iris")
+iris
+
+# Visualizing the dataset
+ggplot(data = iris, aes(x = Petal.Length, y = Petal.Width))+
+  xlab("Petal Length")+
+  ylab("Petal Width") +
+  geom_point(aes(color = Species,shape=Species))+
+  geom_smooth(method='lm')+
+  ggtitle("Iris Petal Length vs Width")
+
+# Pre-processing the data for umap by adding a unique row ID and creating a dataframe with all categorical variables with the unique row ID
+
+iris <- iris %>% 
+  mutate(ID=row_number())
+
+iris_meta <- iris %>%
+  select(ID, Species)
+
+# Performing UMAP
+set.seed(142)
+umap_fit <- iris %>%
+  select(where(is.numeric)) %>%
+  column_to_rownames("ID") %>%
+  scale() %>% 
+  umap()
+umap_df <- umap_fit$layout %>%
+  as.data.frame()%>%
+  rename(UMAP1="V1",
+         UMAP2="V2") %>%
+  mutate(ID=row_number())%>%
+  inner_join(iris_meta, by="ID")
+umap_df
+
+# UMAP Plot
+umap_df %>%
+  ggplot(aes(x = UMAP1, 
+             y = UMAP2, 
+             color = Species))+
+  geom_point()+
+  labs(x = "UMAP1",
+       y = "UMAP2",
+      subtitle = "UMAP plot")
+
+# Checking Aim 1 & 2:- Preservation of distances between clusters/species
+
+## Correlation of original with reconstructed distances between data points
+cor.test(iris$Petal.Length, umap_df$UMAP1, method = 'spearman')
+cor.test(iris$Petal.Width, umap_df$UMAP2, method = 'spearman')
+
+## Preservation of pairwise Mahalanobis distances between clusters
+g1 <- iris[3:4]
+g2 <- umap_df[1:2]
+D.sq <- function (g1, g2) {
+    dbar <- as.vector(colMeans(g1) - colMeans(g2))
+    S1 <- cov(g1)
+    S2 <- cov(g2)
+    n1 <- nrow(g1)
+    n2 <- nrow(g2)
+    V <- as.matrix((1/(n1 + n2 - 2)) * (((n1 - 1) * S1) + ((n2 - 1) * S2)))
+    D.sq <- t(dbar) %*% solve(V) %*% dbar
+    res <- list()
+    res$D.sq <- D.sq
+    res$V <- V
+    res
+}
+
+D.sq(g1,g2)
+
+```
+
+## Demonstration of how to use the function 'umapgp'
+
+This section shall involve defining the function and the parameters to be passed. We shall preprocessing the dataset for UMAP and create a dataframe with all the categorical variables with the unique row ID. We shall then perform UMAP and create the UMAP plot to demonstrate the practical usage of the function **umapgp**.
+
+```{r}
+# Defining the function and the parameters to be passed
+
+umapgp<-function(var,data){
+
+# Pre-processing the dataset for umap
+  data <- data %>%
+    mutate(ID=row_number())
+
+# Creating a dataframe with all the categorical variables with the unique row ID
+  data_meta <- data %>%
+    select(ID, var)
+
+# Performing UMAP
+  set.seed(142)
+  umap_fit <- data %>%
+    select(where(is.numeric)) %>%
+    column_to_rownames("ID") %>%
+    scale() %>%
+    umap(n_neighbors=70,min_dist=0.3)
+
+  umap_df <- umap_fit$layout %>%
+    as.data.frame()%>%
+    rename(UMAP1="V1",
+           UMAP2="V2") %>%
+    mutate(ID=row_number())%>%
+    inner_join(data_meta, by="ID")
+  umap_df$var<- data[, var]
+
+# Creating the UMAP Plot
+  umapplot<-umap_df %>%
+    ggplot(aes(x = UMAP1,
+               y = UMAP2,
+               color = var))+
+    geom_point()+
+    labs(x = "UMAP1",
+         y = "UMAP2",
+         subtitle = "UMAP plot")
+  return(umapplot)
+}
+```
+
+## Package vignette: Quality real-time examples
+
+We shall now use a different dataset 'chickwts' and apply our newly developed package to the dataset to demonstrate the functionality of umapgp in the cluster/species orientation.
+
+```{r}
+# Loading the dataset and performing umapgp
+data("chickwts")
+chickwts
+
+umapgp(var="feed", data=chickwts)
+```
