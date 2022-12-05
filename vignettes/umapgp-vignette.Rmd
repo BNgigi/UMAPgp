@@ -245,14 +245,66 @@ umapgp<-function(var,data){
 
 ## Package vignette: Quality real-time examples
 
-We shall now use a different dataset 'chickwts' and apply our newly developed package to the dataset to demonstrate the functionality of umapgp in the cluster/species orientation.
+We shall now use a different dataset 'birds' and apply our newly developed package to the dataset to demonstrate the functionality of umapgp in the cluster/species orientation. We shall also draw comparisons between the UMAP plots created using the umap and the umapgp functions. 
 
 ```{r}
 # Loading the dataset and performing umapgp
-#data("chickwts")
-#chickwts
-
+library(readr)
+birds <- read.csv("/Users/eva/Downloads/birds.csv") 
+View(birds)
 umapgp(var="type", data=birds)
+```
+
+UMAP, on the other hand, shows a different output. Demonstrated below are the series of steps leading towards the UMAP plot: 
+
+```{r}
+# Visualizing the dataset
+ggplot(data = birds, aes(x = huml, y = humw))+
+  xlab("Humurus Length")+
+  ylab("Humurus Width") +
+  geom_point(aes(color = type,shape=type))+
+  geom_smooth(method='lm')+
+  ggtitle("Birds Petal Length vs Width")
+```
+# Preprocessing the data for umap
+```{r}
+# Adding a unique row ID
+birds <- birds %>% 
+  mutate(id=row_number())
+
+# Creating a dataframe with all categorical variables with the unique row ID
+
+Birds_meta <- birds %>%
+  select(id, type)
+
+```
+
+# Performing UMAP
+```{r}
+set.seed(142)
+umap_fit <- birds %>%
+  select(where(is.numeric)) %>%
+  column_to_rownames("id") %>%
+  scale() %>% 
+  umap()
+umap_df <- umap_fit$layout %>%
+  as.data.frame()%>%
+  rename(UMAP1="V1",
+         UMAP2="V2") %>%
+  mutate(id=row_number())%>%
+  inner_join(birds, by="id")
+umap_df
+```
+# UMAP Plot
+```{r}
+umap_df %>%
+  ggplot(aes(x = UMAP1, 
+             y = UMAP2, 
+             color = type))+
+  geom_point()+
+  labs(x = "UMAP1",
+       y = "UMAP2",
+      subtitle = "UMAP plot")
 ```
 
 ## References
