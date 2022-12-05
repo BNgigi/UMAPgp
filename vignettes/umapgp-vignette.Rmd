@@ -249,10 +249,10 @@ We shall now use a different dataset 'chickwts' and apply our newly developed pa
 
 ```{r}
 # Loading the dataset and performing umapgp
-data("chickwts")
-chickwts
+#data("chickwts")
+#chickwts
 
-umapgp(var="feed", data=chickwts)
+umapgp(var="type", data=birds)
 ```
 
 ## References
