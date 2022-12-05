@@ -2,18 +2,18 @@
 
 
 #' @title UMAPgp package
-#' @description Computes a manifold approximation and projection.
-#' @param data The dataset to be used for analysis, it should be a dataframe with no rownames.
-#' @param var A variable of interest from the dataframe, it should be categorical.
+#' @description Computes Uniform Manifold Approximation and Projection (UMAP).
+#' @param data The dataset to be used should be a dataframe with no rownames.
+#' @param var A variable of interest from the dataframe should be categorical.
 #' @import ggplot2 dplyr umap datasets  devtools  tibble
 #' @return  object of class umap, containing atleast a component with an embedding and a component with configuration settings
 #' @examples umapgp(var="Species",data=iris)
 #' @export
 
-#Defining  the function and parameters to be passed
+# Defining  the function and parameters to be passed
 umapgp<-function(var,data){
 
-#preprocessing data for umap
+# Preprocessing data for umap
   data <- data %>%
     mutate(ID=row_number())
 
