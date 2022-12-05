@@ -175,12 +175,13 @@ Alternative hypothesis:- There is correlation between original and reconstructed
 originalHeight<- c(0.8, 1.1, 1.5)
 reconstructedHeight<-c(5,5,4.9)
 cor.test(originalHeight, reconstructedHeight, method = 'pearson')
-originalWidth<-c()
-reconstructedWidth<-c()
-  
+
+originalWidth<-c(1.4,2.5,2.7)
+reconstructedWidth<-c(5,4.9,6.7)
+cor.test(originalWidth, reconstructedWidth, method = 'pearson')
 ```
 
-The result shows the p-value of 0.2809 which is greater than 0.05 hence we fail to reject the null hypothesis and conclude that there is no correlation between original and reconstructed clusters. We will therefore aim to achieve correlation between original and reconstructed clusters.
+The result shows the p-value of 0.2809 and 0.6069 which are greater than 0.05 hence we fail to reject the null hypothesis and conclude that there is no correlation between original and reconstructed clusters. We will therefore aim to achieve correlation between original and reconstructed clusters.
 
 The current UMAP package has a minimum distance of 0.5 and n_neighbors of 15. Our UMAP package contains minimum distance of 0.3 and n_neighbors of 70. Our package achieves preservation of global structure in Uniform Manifold Approximation and Projection (UMAP) by :-
 
