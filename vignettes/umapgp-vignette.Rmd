@@ -23,9 +23,9 @@ Uniform Manifold Approximation and Projection (UMAP) preserves local structure b
 ## Package Vignette: Significance/ Innovation
 Preservation of global structure in manifold learning algorithms will ensure that UMAP represents the big-picture while not losing the fine details hence, better visualization. Based on the project results, we created an R package that computes Uniform Manifold Approximation and Projection (UMAP) while preserving global structures.
 
-## Addressing Aim 1 and Aim 2: Preservation of Distances between the Clusters/Species
+## Addressing Aim 1 and Aim 2
 
-In this section, we shall load the required packages and import the dataset 'Iris' which shall be used for the purpose of this project. We will work towards visualizing the dataset alongwith preprocessing it to perform UMAP. Additionally, we shall create the UMAP plot and check if the distances between the clusters/species have been preserved. It shall address our Aim 1 and Aim 2. 
+In this section, we shall load the required packages and import the dataset 'Iris' which shall be used for the purpose of this project. We will work towards visualizing the dataset alongwith preprocessing it to perform UMAP. Additionally, we shall create the UMAP plot and check if the distances and shape of the clusters have been preserved. This shall address our Aim 1 and Aim 2. 
 
 # Loading packages
 ```{r}
@@ -199,7 +199,7 @@ The current UMAP package has a minimum distance of 0.5 and n_neighbors of 15. Ou
 
 ## Demonstration of how to use the function 'umapgp'
 
-This section shall involve defining the function and the parameters to be passed. We shall preprocessing the dataset for UMAP and create a dataframe with all the categorical variables with the unique row ID. We shall then perform UMAP and create the UMAP plot to demonstrate the practical usage of the function **umapgp**.
+This section shall involve defining our function and the parameters to be passed. We shall preprocess the dataset for UMAP and create a dataframe with all the categorical variables with the unique row ID. We shall then perform UMAP and create the UMAP plot to demonstrate the practical usage of the function **umapgp**.
 
 ```{r}
 # Defining the function and the parameters to be passed
@@ -245,7 +245,7 @@ umapgp<-function(var,data){
 
 ## Package vignette: Quality real-time examples
 
-We shall now use a different dataset 'birds' and apply our newly developed package to the dataset to demonstrate the functionality of umapgp in the cluster/species orientation. We shall also draw comparisons between the UMAP plots created using the umap and the umapgp functions. 
+We shall now use a different dataset 'birds' and apply our newly developed package to the dataset to demonstrate the functionality of umapgp. We shall also draw comparisons between the UMAP plots created using the umap and the umapgp functions. 
 
 ```{r}
 # Loading the dataset and performing umapgp
@@ -311,7 +311,6 @@ umap_df %>%
 
 1. Leland McInnes, John Healy & James Melville UMAP: Uniform Manifold Approximation and Projection for Dimension Reduction (https://arxiv.org/pdf/1802.03426.pdf)
 2. https://towardsdatascience.com/how-exactly-umap-works-13e3040e1668
-3. https://towardsdatascience.com/why-umap-is-superior-over-tsne-
-faa039c28e99
+3. https://towardsdatascience.com/why-umap-is-superior-over-tsne-faa039c28e99
 4. https://towardsdatascience.com/how-to-program-umap-from-scratch- e6eff67f55fe
 5. https://www.ncbi.nlm.nih.gov/pmc/articles/PMC8547469/
