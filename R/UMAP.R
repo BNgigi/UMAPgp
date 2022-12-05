@@ -2,7 +2,7 @@
 
 
 #' @title UMAPgp package
-#' @description Computes Uniform Manifold Approximation and Projection (UMAP) while preserving the global structures.
+#' @description Computes Uniform Manifold Approximation and Projection (UMAP) while preserving global structures.
 #' @param data The dataset to be used; it should be a dataframe with no rownames.
 #' @param var A variable of interest from the dataset; it should be categorical.
 #' @import ggplot2 dplyr umap datasets  devtools  tibble
