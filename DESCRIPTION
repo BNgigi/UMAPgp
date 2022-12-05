@@ -1,10 +1,10 @@
 Package: UMAPgp
 Type: Package
 Title: Preservation of Global Structure in Uniform Manifold Approximation and Projection (UMAP)
-Version: 0.2.0
+Version: 0.1.0
 Author: Beatrice, Catherine and Pujan
-Maintainer: <nderituc@mail.gvsu.edu>
-Description: It computes a manifold approximation and projection.
+Maintainer: <<nderituc@mail.gvsu.edu>
+Description: It computes a Uniform Manifold Approximation and Projection (UMAP) while preserving global structures.
 License: MIT + file LICENCE
 Encoding: UTF-8
 LazyData: true
