@@ -5,7 +5,7 @@
 #' @description Computes Uniform Manifold Approximation and Projection (UMAP) while preserving global structures.
 #' @param data The dataset to be used; it should be a dataframe with no rownames.
 #' @param var A variable of interest from the dataset; it should be categorical.
-#' @import ggplot2 dplyr umap datasets  devtools  tibble
+#' @import ggplot2 dplyr umap datasets  devtools  tibble magrittr tidyverse
 #' @return  object of class umap, containing atleast a component with an embedding and a component with configuration settings
 #' @examples umapgp(var="Species",data=iris)
 #' @export
