@@ -254,3 +254,12 @@ We shall now use a different dataset 'chickwts' and apply our newly developed pa
 
 umapgp(var="type", data=birds)
 ```
+
+## References
+
+1. Leland McInnes, John Healy & James Melville UMAP: Uniform Manifold Approximation and Projection for Dimension Reduction (https://arxiv.org/pdf/1802.03426.pdf)
+2. https://towardsdatascience.com/how-exactly-umap-works-13e3040e1668
+3. https://towardsdatascience.com/why-umap-is-superior-over-tsne-
+faa039c28e99
+4. https://towardsdatascience.com/how-to-program-umap-from-scratch- e6eff67f55fe
+5. https://www.ncbi.nlm.nih.gov/pmc/articles/PMC8547469/
