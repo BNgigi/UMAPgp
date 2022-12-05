@@ -27,33 +27,41 @@ Preservation of global structure in manifold learning algorithms will ensure tha
 
 In this section, we shall load the required packages and import the dataset 'Iris' which shall be used for the purpose of this project. We will work towards visualizing the dataset alongwith preprocessing it to perform UMAP. Additionally, we shall create the UMAP plot and check if the distances between the clusters/species have been preserved. It shall address our Aim 1 and Aim 2. 
 
+# Loading packages
 ```{r}
-# Loading the packages
 library(umap)
 library(tidyverse)
 library(magrittr)
+```
 
 # Importing the dataset
+```{r}
 data("iris")
 iris
+```
 
 # Visualizing the dataset
+```{r}
 ggplot(data = iris, aes(x = Petal.Length, y = Petal.Width))+
   xlab("Petal Length")+
   ylab("Petal Width") +
   geom_point(aes(color = Species,shape=Species))+
   geom_smooth(method='lm')+
   ggtitle("Iris Petal Length vs Width")
+```
 
-# Pre-processing the data for umap by adding a unique row ID and creating a dataframe with all categorical variables with the unique row ID
-
+# Preprocessing the data for umap
+```{r}
+# Adding a unique row ID
 iris <- iris %>% 
   mutate(ID=row_number())
-
+# Creating a dataframe with all categorical variables with the unique row ID
 iris_meta <- iris %>%
   select(ID, Species)
+```
 
 # Performing UMAP
+```{r}
 set.seed(142)
 umap_fit <- iris %>%
   select(where(is.numeric)) %>%
@@ -65,26 +73,43 @@ umap_df <- umap_fit$layout %>%
   rename(UMAP1="V1",
          UMAP2="V2") %>%
   mutate(ID=row_number())%>%
-  inner_join(iris_meta, by="ID")
+  inner_join(iris, by="ID")
 umap_df
+```
 
 # UMAP Plot
-umap_df %>%
+```{r}
+original_umap_plot <- umap_df %>%
   ggplot(aes(x = UMAP1, 
              y = UMAP2, 
              color = Species))+
   geom_point()+
   labs(x = "UMAP1",
        y = "UMAP2",
-      subtitle = "UMAP plot")
+      subtitle = "UMAP Plot")
+original_umap_plot
+```
 
-# Checking Aim 1 & 2:- Preservation of distances between clusters/species
+# Checking Aim 1
+
+To quantify the global structure by establishing preservation of distances between clusters.
 
 ## Correlation of original with reconstructed distances between data points
-cor.test(iris$Petal.Length, umap_df$UMAP1, method = 'spearman')
-cor.test(iris$Petal.Width, umap_df$UMAP2, method = 'spearman')
+
+Null hypothesis:- There is no correlation between original and reconstructed distances between data points.
+
+Alternative hypothesis:- There is correlation between original and reconstructed distances between data points.
+
+```{r}
+# Pearson is most appropriate for measurements taken from an interval scale, while the Spearman is more appropriate for measurements taken from ordinal scales.
+cor.test(iris$Petal.Length, umap_df$UMAP1, method = 'pearson')
+cor.test(iris$Petal.Width, umap_df$UMAP2, method = 'pearson')
+```
+
+The result shows the p-value of less than 0.05 hence we reject the null hypothesis and conclude that there is a correlation between original and reconstructed distances between data points.
 
 ## Preservation of pairwise Mahalanobis distances between clusters
+```{r}
 g1 <- iris[3:4]
 g2 <- umap_df[1:2]
 D.sq <- function (g1, g2) {
@@ -100,10 +125,77 @@ D.sq <- function (g1, g2) {
     res$V <- V
     res
 }
-
 D.sq(g1,g2)
-
 ```
+
+The mahalanobis distance between clusters is 3.7158. We will therefore aim to achieve mahalanobis Distance of 1 or lower so that the data point are right among the benchmark points.
+
+# Checking Aim 2
+
+To investigate preservation of the shapes of the clusters as another measure of global structure.
+
+## Constructing the bounding boxes
+
+```{r}
+# The bounding boxes around the original clusters
+ggplot() +
+  geom_point(data = iris, aes(x = Petal.Length, y = Petal.Width, color = Species))+
+  xlab("Petal Length")+
+  ylab("Petal Width") +
+  ggtitle("Iris Petal Length vs Width") +   
+  geom_tile() +
+  geom_text() +
+  geom_rect(aes(xmin = 0.8, xmax = 2.2, ymin = 0, ymax = 0.8),
+               fill = "transparent", color = "red", size = 1.5) + 
+    geom_rect(aes(xmin = 2.7, xmax = 5.2, ymin = 0.8, ymax = 1.9),
+               fill = "transparent", color = "green", size = 1.5) +
+      geom_rect(aes(xmin = 4.4, xmax = 7.1, ymin = 1.2, ymax = 2.7),
+               fill = "transparent", color = "blue", size = 1.5) +
+  theme_bw()+
+  theme(legend.position = "bottom")
+```
+
+```{r}
+# The bounding boxes around the reconstructed clusters
+ggplot() +
+  geom_point(data = umap_df, aes(x = UMAP1, y = UMAP2, color = Species)) +
+  labs(x = "UMAP1",
+       y = "UMAP2",
+       subtitle = "UMAP Plot")+
+  geom_tile() +
+  geom_text() +
+  geom_rect(aes(xmin = -5, xmax = 0.0, ymin = -9, ymax = -4),
+               fill = "transparent", color = "red", size = 1.5) + 
+    geom_rect(aes(xmin = -2.5, xmax = 2.4, ymin = 0.5, ymax = 5.5),
+               fill = "transparent", color = "green", size = 1.5) +
+      geom_rect(aes(xmin = -2.0, xmax = 4.7, ymin = 0.6, ymax = 5.5),
+               fill = "transparent", color = "blue", size = 1.5) +
+  theme_bw()+
+  theme(legend.position = "bottom")
+```
+
+## Pearson correlation coefficient between the sizes of the bounding boxes
+
+Null hypothesis:- There is no correlation between original and reconstructed shapes of the clusters.
+
+Alternative hypothesis:- There is correlation between original and reconstructed shapes of the clusters.
+
+```{r}
+originalHeight<- c(0.8, 1.1, 1.5)
+reconstructedHeight<-c(5,5,4.9)
+cor.test(originalHeight, reconstructedHeight, method = 'pearson')
+originalWidth<-c(1.4,2.5,2.7)
+reconstructedWidth<-c(5,4.9,6.7)
+cor.test(originalWidth, reconstructedWidth, method = 'pearson')
+```
+
+The result shows the p-value of 0.2809 and 0.6069 which are greater than 0.05 hence we fail to reject the null hypothesis and conclude that there is no correlation between original and reconstructed clusters. We will therefore aim to achieve correlation between original and reconstructed clusters.
+
+The current UMAP package has a minimum distance of 0.5 and n_neighbors of 15. Our UMAP package contains minimum distance of 0.3 and n_neighbors of 70. Our package achieves preservation of global structure in Uniform Manifold Approximation and Projection (UMAP) by :-
+
+1. Attaining mahalanobis Distance of 1 so that the data point are right among the benchmark points.
+2. Accomplishing a correlation between the original and reconstructed clusters.
+
 
 ## Demonstration of how to use the function 'umapgp'
 
