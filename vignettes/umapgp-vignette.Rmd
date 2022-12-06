@@ -1,6 +1,8 @@
 ---
-title: "umapgp-vignette"
-output: rmarkdown::html_vignette
+title: "UMAPgp-vignette"
+output:
+  prettydoc::html_pretty:
+    theme: HPSTR
 vignette: >
   %\VignetteIndexEntry{umapgp-vignette}
   %\VignetteEngine{knitr::rmarkdown}
@@ -13,10 +15,13 @@ knitr::opts_chunk$set(
   comment = "#>"
 )
 ```
-# Package Vignette: Rationale
-Uniform Manifold Approximation and Projection (UMAP) preserves local structure by grouping neighboring data points together which provides an informative visualization of heterogeneity in a dataset. However, if one wants to understand the relationship between clusters of data points, this can be troublesome since UMAP does not warrant that inter-cluster distances are preserved correctly. To address this shortcomings, we have created a package, UMAPgp which preserves the global structure of manifold learning algorithms without losing the finer details.The developed package is suited to process small datasets with approximately 5,000 data points.
 
-# Package Vignette: Significance/ Innovation
+# Rationale
+
+Uniform Manifold Approximation and Projection (UMAP) preserves local structure by grouping neighboring data points together which provides an informative visualization of heterogeneity in a dataset. However, if one wants to understand the relationship between clusters of data points, this can be troublesome since UMAP does not warrant that inter-cluster distances are preserved correctly. To address this shortcoming, we have created a package, UMAPgp which preserves the global structure of manifold learning algorithms without losing the finer details. The developed package is suited to process small datasets with approximately 5,000 data points.
+
+# Significance/ Innovation
+
 Preservation of global structure in manifold learning algorithms will ensure that UMAP represents the big-picture while not losing the fine details hence, better visualization. Based on the project results, we created an R package that computes Uniform Manifold Approximation and Projection (UMAP) while preserving global structures.
 
 ## Addressing Aim 1 and Aim 2
@@ -24,6 +29,7 @@ Preservation of global structure in manifold learning algorithms will ensure tha
 In this section, we shall load the required packages and import the dataset 'Iris' which shall be used for the purpose of this project. We will work towards visualizing the dataset alongwith preprocessing it to perform UMAP. Additionally, we shall create the UMAP plot and check if the distances and shape of the clusters have been preserved. This shall address our Aim 1 and Aim 2. 
 
 ### Loading packages
+
 ```{r, message = FALSE}
 library(umap)
 library(tidyverse)
@@ -31,12 +37,15 @@ library(magrittr)
 library(UMAPgp)
 ```
 
-### Importing the dataset
+### Importing dataset
+
 ```{r}
-data("iris")
+data("iris") 
+iris %>% slice_head(n=5)
 ```
 
-### Visualizing the dataset
+### A plot of variables of interest
+
 ```{r}
 ggplot(data = iris, aes(x = Petal.Length, y = Petal.Width))+
   xlab("Petal Length")+
@@ -47,6 +56,7 @@ ggplot(data = iris, aes(x = Petal.Length, y = Petal.Width))+
 ```
 
 ### Preprocessing the data for umap
+
 ```{r}
 # Adding a unique row ID
 iris <- iris %>% 
@@ -57,6 +67,7 @@ iris_meta <- iris %>%
 ```
 
 ### Performing UMAP
+
 ```{r}
 set.seed(142)
 umap_fit <- iris %>%
@@ -73,6 +84,7 @@ umap_df <- umap_fit$layout %>%
 ```
 
 ### UMAP Plot
+
 ```{r}
 original_umap_plot <- umap_df %>%
   ggplot(aes(x = UMAP1, 
@@ -96,7 +108,8 @@ Null hypothesis:- There is no correlation between original and reconstructed dis
 Alternative hypothesis:- There is correlation between original and reconstructed distances between data points.
 
 ```{r}
-# Pearson is most appropriate for measurements taken from an interval scale, while the Spearman is more appropriate for measurements taken from ordinal scales.
+# Pearson is most appropriate for measurements taken from an interval scale
+# Spearman is more appropriate for measurements taken from ordinal scales.
 cor.test(iris$Petal.Length, umap_df$UMAP1, method = 'pearson')
 cor.test(iris$Petal.Width, umap_df$UMAP2, method = 'pearson')
 ```
@@ -198,17 +211,13 @@ This section shall involve defining our function and the parameters to be passed
 
 ```{r}
 # Defining the function and the parameters to be passed
-
 umapgp<-function(var,data){
-
 # Pre-processing the dataset for umap
   data <- data %>%
     mutate(ID=row_number())
-
 # Creating a dataframe with all the categorical variables with the unique row ID
   data_meta <- data %>%
     select(ID, var)
-
 # Performing UMAP
   set.seed(142)
   umap_fit <- data %>%
@@ -216,7 +225,6 @@ umapgp<-function(var,data){
     column_to_rownames("ID") %>%
     scale() %>%
     umap(n_neighbors=70,min_dist=0.3)
-
   umap_df <- umap_fit$layout %>%
     as.data.frame()%>%
     rename(UMAP1="V1",
@@ -224,7 +232,6 @@ umapgp<-function(var,data){
     mutate(ID=row_number())%>%
     inner_join(data_meta, by="ID")
   umap_df$var<- data[, var]
-
 # Creating the UMAP Plot
   umapplot<-umap_df %>%
     ggplot(aes(x = UMAP1,
@@ -238,21 +245,19 @@ umapgp<-function(var,data){
 }
 ```
 
-# Package vignette: Real-life example
+# Real-life example
 
 We shall now use a different dataset 'birds' and apply our newly developed package to the dataset to demonstrate the functionality of umapgp. We shall also draw comparisons between the UMAP plots created using the umap and the umapgp functions. 
 
+## Loading the dataset and creating a plot of variables of interest
+
 ```{r}
-# Loading the dataset and performing umapgp
+# Importing the dataset
 library(readr)
-birds <- read.csv("birds.csv") 
-umapgp(var="type", data=birds)
-```
+birds <- read.csv("birds.csv")
+birds %>% slice_head(n=5)
 
-UMAP, on the other hand, shows a different output. Demonstrated below are the series of steps leading towards the UMAP plot: 
-
-```{r}
-# Visualizing the dataset
+# A plot of variable of interest
 ggplot(data = birds, aes(x = huml, y = humw))+
   xlab("Humurus Length")+
   ylab("Humurus Width") +
@@ -260,21 +265,17 @@ ggplot(data = birds, aes(x = huml, y = humw))+
   geom_smooth(method='lm')+
   ggtitle("Birds Petal Length vs Width")
 ```
-# Preprocessing the data for UMAP
+
+## Performing UMAP
 ```{r}
+## Preprocessing the data for UMAP
 # Adding a unique row ID
 birds <- birds %>% 
   mutate(id=row_number())
-
 # Creating a dataframe with all categorical variables with the unique row ID
-
 Birds_meta <- birds %>%
   select(id, type)
-
-```
-
-# Performing UMAP
-```{r}
+## Performing UMAP
 set.seed(142)
 umap_fit <- birds %>%
   select(where(is.numeric)) %>%
@@ -287,9 +288,7 @@ umap_df <- umap_fit$layout %>%
          UMAP2="V2") %>%
   mutate(id=row_number())%>%
   inner_join(birds, by="id")
-```
-# UMAP Plot
-```{r}
+### UMAP Plot
 umap_df %>%
   ggplot(aes(x = UMAP1, 
              y = UMAP2, 
@@ -298,6 +297,16 @@ umap_df %>%
   labs(x = "UMAP1",
        y = "UMAP2",
       subtitle = "UMAP plot")
+```
+
+# Performing umapgp
+
+```{r}
+umapgp(var="type", data=birds)
+```
+
+In conclusion, the UMAPgp package preserves the global structures better compared to the original UMAP package. 
+
 ```
 
 ## References
