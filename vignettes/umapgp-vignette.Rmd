@@ -212,7 +212,7 @@ This section shall involve defining our function and the parameters to be passed
 ```{r}
 # Defining the function and the parameters to be passed
 umapgp<-function(var,data){
-# Pre-processing the dataset for umap
+# Pre-processing the dataset for UMAP
   data <- data %>%
     mutate(ID=row_number())
 # Creating a dataframe with all the categorical variables with the unique row ID
