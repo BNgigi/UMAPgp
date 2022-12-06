@@ -17,5 +17,10 @@ library(UMAPgp)
 ## Link to the package vignette
 
 ## Example Code Block
-
+```{r}
+# Loading the dataset and performing umapgp
+library(readr)
+birds <- read.csv("/Users/eva/Downloads/birds.csv") 
+umapgp(var="type", data=birds)
+```
 
