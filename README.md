@@ -23,7 +23,7 @@ Here-in is the link to UMAPgp Package Vignette:-
 
 ### Example code block
 
-\example{
+
   # Usage
   umapgp(var, data)
   var: A variable of interest from the dataframe, it should be categorical.
