@@ -263,7 +263,7 @@ ggplot(data = birds, aes(x = huml, y = humw))+
   ylab("Humurus Width") +
   geom_point(aes(color = type,shape=type))+
   geom_smooth(method='lm')+
-  ggtitle("Birds Petal Length vs Width")
+  ggtitle("Birds Humurus Length vs Width")
 ```
 
 ## *Performing UMAP*
