@@ -19,11 +19,16 @@ Here-in is the link to UMAPgp Package Vignette:-
 * [Package Vignette](https://github.com/BNgigi/UMAPgp/blob/main/vignettes/umapgp-vignette.Rmd)
 
 ### Example code block
-  #### Usage
-  $ umapgp(var, data)
-  $ var: A variable of interest from the dataframe, it should be categorical.
-  $ data: The dataset to be used for analysis, it should be a dataframe with no rownames.
-  #### Example
-  $ library(UMAPgp)
-  $ data("iris")
-  $ umapgp(var="Species",data=iris)
+
+```{r}
+#### Usage
+umapgp(var, data)
+var: A variable of interest from the dataframe, it should be categorical.
+data: The dataset to be used for analysis, it should be a dataframe with no rownames.
+#### Example
+library(UMAPgp)
+data("iris")
+umapgp(var="Species",data=iris)
+```
+
+
