@@ -55,7 +55,7 @@ ggplot(data = iris, aes(x = Petal.Length, y = Petal.Width))+
   ggtitle("Iris Petal Length vs Width")
 ```
 
-### Preprocessing the data for umap
+### Preprocessing the data for UMAP
 
 ```{r}
 # Adding a unique row ID
@@ -299,15 +299,12 @@ umap_df %>%
       subtitle = "UMAP plot")
 ```
 
-# Performing umapgp
+# Performing UMAPgp
 
 ```{r}
 umapgp(var="type", data=birds)
 ```
-
 In conclusion, the UMAPgp package preserves the global structures better compared to the original UMAP package. 
-
-```
 
 ## References
 
