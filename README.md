@@ -10,7 +10,7 @@ Below is a procedure for the UMAPgp package installation:-
 
 ```
 $ library(devtools)
-$ install_github("BNgigi/UMAPgp")
+$ install_github("https://github.com/BNgigi/UMAPgp-R-Package")
 $ library(UMAPgp)
 ```
 
