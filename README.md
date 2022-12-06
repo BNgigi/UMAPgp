@@ -19,6 +19,7 @@ Here-in is the link to UMAPgp Package Vignette:-
 * [Package Vignette](https://github.com/BNgigi/UMAPgp/blob/main/vignettes/umapgp-vignette.Rmd)
 
 ### Example code block
+Use the package as guided below:-
 
 ```{r}
 #### Usage
@@ -28,7 +29,5 @@ data: The dataset to be used for analysis, it should be a dataframe with no rown
 #### Example
 library(UMAPgp)
 data("iris")
-umapgp(var="Species",data=iris)
+umapgp(var="Species", data=iris)
 ```
-
-
