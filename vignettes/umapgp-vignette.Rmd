@@ -243,7 +243,7 @@ umapgp<-function(var,data){
 }
 ```
 
-## Package vignette: Real-life examples
+## Package vignette: Real-life example
 
 We shall now use a different dataset 'birds' and apply our newly developed package to the dataset to demonstrate the functionality of umapgp. We shall also draw comparisons between the UMAP plots created using the umap and the umapgp functions. 
 
