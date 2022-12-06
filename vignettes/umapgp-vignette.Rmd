@@ -16,19 +16,19 @@ knitr::opts_chunk$set(
 )
 ```
 
-# Rationale
+# **Rationale**
 
 Uniform Manifold Approximation and Projection (UMAP) preserves local structure by grouping neighboring data points together which provides an informative visualization of heterogeneity in a dataset. However, if one wants to understand the relationship between clusters of data points, this can be troublesome since UMAP does not warrant that inter-cluster distances are preserved correctly. To address this shortcoming, we have created a package, UMAPgp which preserves the global structure of manifold learning algorithms without losing the finer details. The developed package is suited to process small datasets with approximately 5,000 data points.
 
-# Significance/ Innovation
+# **Significance/ Innovation**
 
 Preservation of global structure in manifold learning algorithms will ensure that UMAP represents the big-picture while not losing the fine details hence, better visualization. Based on the project results, we created an R package that computes Uniform Manifold Approximation and Projection (UMAP) while preserving global structures.
 
-## Addressing Aim 1 and Aim 2
+## **Addressing Aim 1 and Aim 2**
 
 In this section, we shall load the required packages and import the dataset 'Iris' which shall be used for the purpose of this project. We will work towards visualizing the dataset alongwith preprocessing it to perform UMAP. Additionally, we shall create the UMAP plot and check if the distances and shape of the clusters have been preserved. This shall address our Aim 1 and Aim 2. 
 
-### Loading packages
+### *Loading packages*
 
 ```{r, message = FALSE}
 library(umap)
@@ -37,14 +37,14 @@ library(magrittr)
 library(UMAPgp)
 ```
 
-### Importing dataset
+### *Importing dataset*
 
 ```{r}
 data("iris") 
 iris %>% slice_head(n=5)
 ```
 
-### A plot of variables of interest
+### *A plot of variables of interest*
 
 ```{r}
 ggplot(data = iris, aes(x = Petal.Length, y = Petal.Width))+
@@ -55,7 +55,7 @@ ggplot(data = iris, aes(x = Petal.Length, y = Petal.Width))+
   ggtitle("Iris Petal Length vs Width")
 ```
 
-### Preprocessing the data for UMAP
+### *Preprocessing the data for UMAP*
 
 ```{r}
 # Adding a unique row ID
@@ -66,7 +66,7 @@ iris_meta <- iris %>%
   select(ID, Species)
 ```
 
-### Performing UMAP
+### *Performing UMAP*
 
 ```{r}
 set.seed(142)
@@ -83,7 +83,7 @@ umap_df <- umap_fit$layout %>%
   inner_join(iris, by="ID")
 ```
 
-### UMAP Plot
+### *UMAP Plot*
 
 ```{r}
 original_umap_plot <- umap_df %>%
@@ -101,7 +101,7 @@ original_umap_plot
 
 To quantify the global structure by establishing preservation of distances between clusters.
 
-### Correlation of original with reconstructed distances between data points
+### *Correlation of original with reconstructed distances between data points*
 
 Null hypothesis:- There is no correlation between original and reconstructed distances between data points.
 
@@ -116,7 +116,7 @@ cor.test(iris$Petal.Width, umap_df$UMAP2, method = 'pearson')
 
 The result shows the p-value of less than 0.05 hence we reject the null hypothesis and conclude that there is a correlation between original and reconstructed distances between data points.
 
-### Preservation of pairwise Mahalanobis distances between clusters
+### *Preservation of pairwise Mahalanobis distances between clusters*
 ```{r}
 g1 <- iris[3:4]
 g2 <- umap_df[1:2]
@@ -142,7 +142,7 @@ The mahalanobis distance between clusters is 3.7158. We will therefore aim to ac
 
 To investigate preservation of the shapes of the clusters as another measure of global structure.
 
-### Constructing the bounding boxes
+### *Constructing the bounding boxes*
 
 ```{r}
 # The bounding boxes around the original clusters
@@ -182,7 +182,7 @@ ggplot() +
   theme(legend.position = "bottom")
 ```
 
-### Pearson correlation coefficient between the sizes of the bounding boxes
+### *Pearson correlation coefficient between the sizes of the bounding boxes*
 
 Null hypothesis:- There is no correlation between original and reconstructed shapes of the clusters.
 
@@ -205,9 +205,9 @@ The current UMAP package has a minimum distance of 0.5 and n_neighbors of 15. Ou
 2. Accomplishing a correlation between the original and reconstructed clusters.
 
 
-# Demonstration of how to use the function 'umapgp'
+# **Demonstration of how to use the function 'UMAPgp'**
 
-This section shall involve defining our function and the parameters to be passed. We shall preprocess the dataset for UMAP and create a dataframe with all the categorical variables with the unique row ID. We shall then perform UMAP and create the UMAP plot to demonstrate the practical usage of the function **umapgp**.
+This section shall involve defining our function and the parameters to be passed. We shall preprocess the dataset for UMAP and create a dataframe with all the categorical variables with the unique row ID. We shall then perform UMAP and create the UMAP plot to demonstrate the practical usage of the function **UMAPgp**.
 
 ```{r}
 # Defining the function and the parameters to be passed
@@ -245,11 +245,11 @@ umapgp<-function(var,data){
 }
 ```
 
-# Real-life example
+# **Real-life example**
 
 We shall now use a different dataset 'birds' and apply our newly developed package to the dataset to demonstrate the functionality of umapgp. We shall also draw comparisons between the UMAP plots created using the umap and the umapgp functions. 
 
-## Loading the dataset and creating a plot of variables of interest
+## *Loading the dataset and creating a plot of variables of interest*
 
 ```{r}
 # Importing the dataset
@@ -266,7 +266,7 @@ ggplot(data = birds, aes(x = huml, y = humw))+
   ggtitle("Birds Petal Length vs Width")
 ```
 
-## Performing UMAP
+## *Performing UMAP*
 ```{r}
 ## Preprocessing the data for UMAP
 # Adding a unique row ID
@@ -302,14 +302,16 @@ umap_df %>%
 # Performing UMAPgp
 
 ```{r}
+library(UMAPgp)
 umapgp(var="type", data=birds)
 ```
+
 In conclusion, the UMAPgp package preserves the global structures better compared to the original UMAP package. 
 
-## References
+## **References**
 
 1. Leland McInnes, John Healy & James Melville UMAP: Uniform Manifold Approximation and Projection for Dimension Reduction (https://arxiv.org/pdf/1802.03426.pdf)
 2. https://towardsdatascience.com/how-exactly-umap-works-13e3040e1668
 3. https://towardsdatascience.com/why-umap-is-superior-over-tsne-faa039c28e99
-4. https://towardsdatascience.com/how-to-program-umap-from-scratch- e6eff67f55fe
+4. https://towardsdatascience.com/how-to-program-umap-from-scratch-e6eff67f55fe
 5. https://www.ncbi.nlm.nih.gov/pmc/articles/PMC8547469/
