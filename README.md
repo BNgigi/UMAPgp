@@ -6,14 +6,15 @@ Uniform Manifold Approximation and Projection (UMAP) preserves local structure b
 
 ### Installation of the package UMAPgp
 
-library(devtools)
-install_github("BNgigi/UMAPgp")
-library(UMAPgp)
+>library(devtools)
+>install_github("BNgigi/UMAPgp")
+>library(UMAPgp)
 
-## Link to the pkgdown site
+### Link to the pkgdown site
 
-## Link to the package vignette
-[Catchy word or short word](URL to navigate)
+### Link to the package vignette
+Here-in is the link to UMAPgp Package Vignette
+[Package Vignette](https://github.com/BNgigi/UMAPgp/blob/main/vignettes/umapgp-vignette.Rmd)
 
 ## Example code block
 ```{r}
