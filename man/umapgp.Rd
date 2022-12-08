@@ -20,3 +20,8 @@ Computes Uniform Manifold Approximation and Projection (UMAP) while preserving g
 \examples{
 umapgp(var="Species",data=iris)
 }
+\references{
+Robert E Tarjan and Mihalis Yannakis.(1984). Simple Linear-time algorithms to test chordality of graphs, test acyclicity
+of hypergraphs. *SIAM Journal of Computation* **13**,566-579.
+See `::is_falsy` for the defination of what is _falsy_ and what is _truthy_.
+}
