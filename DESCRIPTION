@@ -17,7 +17,8 @@ Imports:
     umap,
     tibble,
     tidyverse,
-    magrittr
+    magrittr,
+    readr
 Suggests: 
     knitr,
     rmarkdown,
