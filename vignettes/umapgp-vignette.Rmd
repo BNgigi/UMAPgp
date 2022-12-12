@@ -254,7 +254,9 @@ We shall now use a different dataset 'birds' and apply our newly developed packa
 ```{r}
 # Importing the dataset
 library(readr)
-birds <- read.csv("birds.csv")
+##checking and reading the data
+fpath <- system.file("extdata","birds.csv", package="UMAPgp")
+birds<-read.csv(fpath)
 birds %>% slice_head(n=5)
 
 # A plot of variable of interest
