@@ -28,6 +28,7 @@
 #' @examples umapgp(var="Species",data=iris)
 #' @references Robert E Tarjan and Mihalis Yannakis.(1984). Simple Linear-time algorithms to test chordality of graphs, test acyclicity
 #' of hypergraphs.
+#' Leland McInnes, John Healy & James Melville UMAP: Uniform Manifold Approximation and Projection for Dimension Reduction
 #' @export
 
 # Defining  the function and parameters to be passed
