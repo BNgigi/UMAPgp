@@ -3,6 +3,23 @@
 
 #' @title UMAPgp package
 #' @description Computes Uniform Manifold Approximation and Projection (UMAP) while preserving global structures.
+#' @details
+#' Create, modify, and delete columns
+#' `mutate()` adds new variables and preserves the existing ones
+#' `rename()` renames columns
+#' Subset columns using their names and types
+#' `select()` picks variable basedon their names
+#' `where()`selection helper that selects the variables for which a function returns TRUE
+#' Assign row names
+#' `column_to_rownames()` assigns row names to the dataframe
+#' Scaling columns of a matrix
+#' `scale()`centers and scales the columns of a numeric matrix
+#' Mutating joins
+#' `inner_join()`An inner join is a merge operation between two data frame which seeks to only return the
+#' records which matched between the two data frames
+#' Data visualization
+#' `ggplot()`used to declare the input data frame for a graphic and to specify the set of plot aesthetics
+#' intended to be common throughout all subsequent layers unless specifically overridden
 #' @param data The dataset to be used; it should be a dataframe with no rownames.
 #' @param var A variable of interest from the dataset; it should be categorical.
 #' @param path path to filename
