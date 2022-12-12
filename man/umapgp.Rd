@@ -10,6 +10,8 @@ umapgp(var, data)
 \item{var}{A variable of interest from the dataset; it should be categorical.}
 
 \item{data}{The dataset to be used; it should be a dataframe with no rownames.}
+
+\item{path}{path to filename}
 }
 \value{
 object of class umap, containing atleast a component with an embedding and a component with configuration settings
@@ -22,6 +24,5 @@ umapgp(var="Species",data=iris)
 }
 \references{
 Robert E Tarjan and Mihalis Yannakis.(1984). Simple Linear-time algorithms to test chordality of graphs, test acyclicity
-of hypergraphs. *SIAM Journal of Computation* **13**,566-579.
-See `::is_falsy` for the defination of what is _falsy_ and what is _truthy_.
+of hypergraphs.
 }
