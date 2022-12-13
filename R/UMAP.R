@@ -1,7 +1,3 @@
-
-
-
-#' @title UMAPgp package
 #' @description Computes Uniform Manifold Approximation and Projection (UMAP) while preserving global structures.
 #' @details
 #' Create, modify, and delete columns
@@ -29,6 +25,7 @@
 #' of hypergraphs.
 #' Leland McInnes, John Healy & James Melville UMAP: Uniform Manifold Approximation and Projection for Dimension Reduction
 #' @export
+#' @rdname umapgp
 
 # Defining  the function and parameters to be passed
 umapgp<-function(var,data){
