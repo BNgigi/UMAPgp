@@ -1,8 +1,6 @@
 ---
 title: "UMAPgp-vignette"
-output:
-  prettydoc::html_pretty:
-    theme: HPSTR
+output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{umapgp-vignette}
   %\VignetteEngine{knitr::rmarkdown}
