@@ -4,12 +4,10 @@ Title: Preservation of Global Structure in Uniform Manifold Approximation and Pr
 Version: 0.1.0
 Authors@R: c(person("Beatrice", "Ngigi", 
             email = "ngigib@mail.gvsu.edu", 
-            role = c("aut", "cre")),
-            
+            role = c("aut", "ctb")),
             person("Catherine", "Nderitu",
             email = "nderituc@mail.gvsu.edu",
             role  = c("aut", "cre")),
-            
             person("Pujan", "Rijal",
             email = "rijalp@mail.gvsu.edu",
             role  = c("aut", "ctb"))) 
