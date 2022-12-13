@@ -1,5 +1,5 @@
 ---
-title: "UMAPgp-vignette"
+title: "umapgp-vignette"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{umapgp-vignette}
