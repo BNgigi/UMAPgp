@@ -16,7 +16,7 @@ $ library(UMAPgp)
 ### Link to the package vignette
 Here-in is the link to UMAPgp Package Vignette:-
 
-* [Package Vignette](https://github.com/BNgigi/UMAPgp/blob/main/vignettes/umapgp-vignette.Rmd)
+* [Package Vignette](https://bngigi.github.io/UMAPgp-R-Package/articles/umapgp-vignette.html)
 
 ### Example code block
 Use the package as guided below:-
