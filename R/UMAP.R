@@ -1,7 +1,3 @@
-
-
-
-#' @title UMAPgp package
 #' @description Computes Uniform Manifold Approximation and Projection (UMAP) while preserving global structures.
 #' @details
 #' Create, modify, and delete columns
@@ -22,7 +18,6 @@
 #' intended to be common throughout all subsequent layers unless specifically overridden
 #' @param data The dataset to be used; it should be a dataframe with no rownames.
 #' @param var A variable of interest from the dataset; it should be categorical.
-#' @param path path to filename
 #' @import ggplot2 dplyr umap datasets  devtools  tibble magrittr tidyverse readr
 #' @return  object of class umap, containing atleast a component with an embedding and a component with configuration settings
 #' @examples umapgp(var="Species",data=iris)
@@ -30,6 +25,7 @@
 #' of hypergraphs.
 #' Leland McInnes, John Healy & James Melville UMAP: Uniform Manifold Approximation and Projection for Dimension Reduction
 #' @export
+#' @rdname umapgp
 
 # Defining  the function and parameters to be passed
 umapgp<-function(var,data){
